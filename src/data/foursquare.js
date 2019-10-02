@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {numberOfVenues} from "../configuration/constants"
 
-const clientId = "3DPN2ENQ0OTEPWMLBM3EFWSIWDPHPIWFPDDR0MV4QEKMDNPP";
-const clientSecret = "CZAA1JCYSWHINAKXX45FOGA4U5PNENPRNIHJY14ULBSQEYX0";
+const clientId = "DPB1OKXHBH0CYPYZYWIWNYF0EUZRZLQCTGJFDUSCRIMKTE52";
+const clientSecret = "FVVQXELBC5F0T0XZUFLD3HBCLRAGEF0TWRJWZV2N3UEB5ZLQ";
 const apiVersion = "20190724";
 const locale = "en";
 const query = "lunch";

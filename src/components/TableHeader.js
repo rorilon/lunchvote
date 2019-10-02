@@ -40,6 +40,29 @@ export const MainDiv = styled.div`
    overflow: auto;
    display: table-row;
 `;
+const HeaderText = styled.p`
+    text-align: center;
+    margin: 0px;
+`;
+const Rating = styled.span`
+    text-align: center;
+    margin: 0px;
+    font-weight: bold;
+    color: #282c34;
+    font-size: 13px;
+`;
+const VenueLink = styled.a`
+    text-align: center;
+    margin: 0px;
+    font-size: 15px;
+`;
+const VenueCategory = styled.span`
+    text-align: center;
+    margin: 0px;
+    color: darkgray;
+    font-size: 12px;
+    
+`;
 
 
 const helperArray = [...Array(numberOfVenues)];
@@ -50,12 +73,30 @@ function TableHeader() {
             {value =>
                 <MainDiv>
                     <ParticipantsDiv><ParticipantsDivText>Participants</ParticipantsDivText></ParticipantsDiv>
-                    {helperArray.map((_, i) => <RestaurantDiv
-                        highlighted={i === value.getFavourableVenue()}>{value.setVenueInfo(i)}</RestaurantDiv>)}
+                    {helperArray.map((_, i) =>
+                        <RestaurantDiv highlighted={i === value.getFavourableVenue()}>
+                            <VenueInformation venue={value.setVenueInfo(i)}/>
+                        </RestaurantDiv>
+                    )}
                 </MainDiv>
             }
         </DataContext.Consumer>
     );
 }
+
+const VenueInformation = ({venue}) =>
+    <>
+        {typeof venue === "object" ?
+            <HeaderText>
+                <VenueLink href={venue.shortUrl}>{venue.name}</VenueLink>
+                <br/>
+                <VenueCategory>{venue.categories[0].name}</VenueCategory>
+                <br/>
+                <Rating>{venue.rating}</Rating>
+            </HeaderText> :
+            venue
+        }
+    </>;
+
 
 export default TableHeader;

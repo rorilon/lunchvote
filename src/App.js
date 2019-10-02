@@ -19,30 +19,6 @@ export const HeaderLabel = styled.label`
   font-weight: bold;
 `;
 
-export const HeaderText = styled.p`
-    text-align: center;
-    margin: 0px;
-`;
-export const Rating = styled.span`
-    text-align: center;
-    margin: 0px;
-    font-weight: bold;
-    color: #282c34;
-    font-size: 13px;
-`;
-export const VenueLink = styled.a`
-    text-align: center;
-    margin: 0px;
-    font-size: 15px;
-`;
-export const VenueCategory = styled.span`
-    text-align: center;
-    margin: 0px;
-    color: darkgray;
-    font-size: 12px;
-    
-`;
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -92,19 +68,12 @@ class App extends React.Component {
         this.setState({venues: venues, tableData: [], chosenVenue: null});
     };
     setVenueInfo = (index) => {
-        let venueString = 'Venue ' + index;
-
-        if (this.state.venues.length === 3) {
+        if (this.state.venues.length === numberOfVenues) {
             const venue = this.state.venues[index];
-            return (
-                <HeaderText><VenueLink href={venue.shortUrl}>{venue.name}</VenueLink><br/>
-                    <VenueCategory>{venue.categories[0].name}</VenueCategory><br/>
-                    <Rating>{venue.rating}</Rating></HeaderText>
-            )
-        } else
-            return venueString;
-
-
+            return venue
+        } else {
+            return 'Venue ' + index
+        }
     };
     setVenueChoiceForParticipant = (index, venue) => {
         const newTableData = [...this.state.tableData];
