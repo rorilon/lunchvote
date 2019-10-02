@@ -6,6 +6,7 @@ import AddParticipantButton from './components/AddParticipantButton.js';
 import VotingTable from "./components/VotingTable";
 import {DataContext} from "./context/data";
 import styled from "styled-components";
+import {numberOfVenues} from "./configuration/constants";
 
 export const AppDiv = styled.div`
     display: table;
@@ -115,38 +116,38 @@ class App extends React.Component {
         return this.state.tableData[index].venue;
     };
     calculateFavourableVenue = () => {
-        let chosenVenue = null;
-        if (this.state.tableData.length > 0) {
-            let counts = {};
-            for (var i = 0; i < this.state.tableData.length; i++) {
-                let num = this.state.tableData[i].venue;
-                counts[num] = counts[num] ? counts[num] + 1 : 1;
-            }
-            if (counts) {
-                let arr = [counts[0], counts[1], counts[2]].sort((a, b) => {
-                    return b - a
-                });
-                if (arr[0] === arr[1]) {
-                    chosenVenue = null;
-                } else {
-                    let max = arr[0];
-                    console.log(arr);
-                    if (max === counts[0])
-                        chosenVenue = 0;
-                    if (max === counts[1])
-                        chosenVenue = 1;
-                    if (max === counts[2])
-                        chosenVenue = 2;
-                }
-
-            }
+        const chosenVenue = this.getChosenVenue();
+        this.setState({chosenVenue});
+    };
+    getChosenVenue = () => {
+        if (numberOfVenues === 1) {
+            return 0
         }
-        if (this.state.chosenVenue !== chosenVenue)
-            this.setState({chosenVenue});
+        const counts = this.state.tableData.reduce((acc, v) => {
+            const venueIndex = v.venue;
+            acc[venueIndex]++;
+            return acc
+        }, zeroCounts());
+        const sortedCounts = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        const firstPlaceVotes = sortedCounts[0][1];
+        const secondPlaceVotes = sortedCounts[1][1];
+        if (firstPlaceVotes === secondPlaceVotes) {
+            return null;
+        }
+        const firstPlaceIndex = sortedCounts[0][0];
+        return Number.parseInt(firstPlaceIndex)
     };
     getFavourableVenue = () => {
         return this.state.chosenVenue;
-    }
+    };
 }
+
+const zeroCounts = () => {
+    const result = {};
+    for (let i = 0; i < numberOfVenues; i++) {
+        result[i] = 0;
+    }
+    return result
+};
 
 export default App;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {DataContext} from "../context/data";
+import {numberOfVenues} from "../configuration/constants";
 
 export const ParticipantsDiv = styled.div`
     color: darkgray;
@@ -37,17 +38,19 @@ export const RestaurantDiv = styled.div`
 `;
 export const MainDiv = styled.div`
    overflow: auto;
-   Display: table-row;
+   display: table-row;
 `;
 
-//getFavourableVenue
+
+const helperArray = [...Array(numberOfVenues)];
+
 function TableHeader() {
     return (
         <DataContext.Consumer>
             {value =>
                 <MainDiv>
                     <ParticipantsDiv><ParticipantsDivText>Participants</ParticipantsDivText></ParticipantsDiv>
-                    {[0, 1, 2].map(i => <RestaurantDiv
+                    {helperArray.map((_, i) => <RestaurantDiv
                         highlighted={i === value.getFavourableVenue()}>{value.setVenueInfo(i)}</RestaurantDiv>)}
                 </MainDiv>
             }

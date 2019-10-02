@@ -1,11 +1,12 @@
 import axios from 'axios';
+import {numberOfVenues} from "../configuration/constants"
 
 const clientId = "3DPN2ENQ0OTEPWMLBM3EFWSIWDPHPIWFPDDR0MV4QEKMDNPP";
 const clientSecret = "CZAA1JCYSWHINAKXX45FOGA4U5PNENPRNIHJY14ULBSQEYX0";
 const apiVersion = "20190724";
 const locale = "en";
 const query = "lunch";
-const limit = 3;
+const limit = numberOfVenues;
 
 const objectToQueryString = (obj) => "?" + Object.keys(obj).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`).join('&');
 
