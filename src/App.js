@@ -1,16 +1,16 @@
-import React from 'react';
-import './App.css';
-import Search from './components/Search.js';
-import TableHeader from './components/TableHeader.js';
-import AddParticipantButton from './components/AddParticipantButton.js';
+import React from "react";
+import "./App.css";
+import Search from "./components/Search.js";
+import TableHeader from "./components/TableHeader.js";
+import AddParticipantButton from "./components/AddParticipantButton.js";
 import VotingTable from "./components/VotingTable";
 import {DataContext} from "./context/data";
 import styled from "styled-components";
 import {numberOfVenues} from "./configuration/constants";
 
 export const AppDiv = styled.div`
-    display: table;
-    width: 100%;
+  display: table;
+  width: 100%;
 `;
 export const HeaderLabel = styled.label`
   float: left;
@@ -25,7 +25,7 @@ class App extends React.Component {
         this.state = {
             tableData: [],
             venues: [],
-            chosenVenue: null,
+            chosenVenue: null
         };
     }
 
@@ -41,7 +41,7 @@ class App extends React.Component {
                         setVenueChoiceForParticipant: this.setVenueChoiceForParticipant,
                         setVenueInfo: this.setVenueInfo,
                         getVenueChoiceForParticipant: this.getVenueChoiceForParticipant,
-                        getFavourableVenue: this.getFavourableVenue,
+                        getFavourableVenue: this.getFavourableVenue
                     }}
                 >
                     <HeaderLabel>Lunchplace</HeaderLabel>
@@ -64,15 +64,15 @@ class App extends React.Component {
         newTableData[index].name = name;
         this.setState({tableData: newTableData});
     };
-    setVenues = (venues) => {
+    setVenues = venues => {
         this.setState({venues: venues, tableData: [], chosenVenue: null});
     };
-    setVenueInfo = (index) => {
+    setVenueInfo = index => {
         if (this.state.venues.length === numberOfVenues) {
             const venue = this.state.venues[index];
-            return venue
+            return venue;
         } else {
-            return 'Venue ' + index
+            return "Venue " + index;
         }
     };
     setVenueChoiceForParticipant = (index, venue) => {
@@ -81,7 +81,7 @@ class App extends React.Component {
         this.setState({tableData: newTableData});
         this.calculateFavourableVenue();
     };
-    getVenueChoiceForParticipant = (index) => {
+    getVenueChoiceForParticipant = index => {
         return this.state.tableData[index].venue;
     };
     calculateFavourableVenue = () => {
@@ -90,12 +90,12 @@ class App extends React.Component {
     };
     getChosenVenue = () => {
         if (numberOfVenues === 1) {
-            return 0
+            return 0;
         }
         const counts = this.state.tableData.reduce((acc, v) => {
             const venueIndex = v.venue;
             acc[venueIndex]++;
-            return acc
+            return acc;
         }, zeroCounts());
         const sortedCounts = Object.entries(counts).sort((a, b) => b[1] - a[1]);
         const firstPlaceVotes = sortedCounts[0][1];
@@ -104,7 +104,7 @@ class App extends React.Component {
             return null;
         }
         const firstPlaceIndex = sortedCounts[0][0];
-        return Number.parseInt(firstPlaceIndex)
+        return Number.parseInt(firstPlaceIndex);
     };
     getFavourableVenue = () => {
         return this.state.chosenVenue;
@@ -116,7 +116,7 @@ const zeroCounts = () => {
     for (let i = 0; i < numberOfVenues; i++) {
         result[i] = 0;
     }
-    return result
+    return result;
 };
 
 export default App;
