@@ -5,7 +5,6 @@ import TableHeader from './components/TableHeader.js';
 import AddParticipantButton from './components/AddParticipantButton.js';
 import VotingTable from "./components/VotingTable";
 import {DataContext} from "./context/data";
-import axios from 'axios';
 import styled from "styled-components";
 
 export const AppDiv = styled.div`
@@ -90,28 +89,6 @@ class App extends React.Component {
     };
     setVenues = (venues) => {
         this.setState({venues: venues, tableData: [], chosenVenue: null});
-        const detailedVenues = [...venues];
-        if (venues.length === 3) {
-            for (let i = 0; i < venues.length; i++) {
-                const venueid = venues[i].id;
-                const qs = `
-?client_id=3DPN2ENQ0OTEPWMLBM3EFWSIWDPHPIWFPDDR0MV4QEKMDNPP
-&client_secret=CZAA1JCYSWHINAKXX45FOGA4U5PNENPRNIHJY14ULBSQEYX0
-&v=20190724&locale=en`;
-                axios.get(`https://api.foursquare.com/v2/venues/` + venueid + qs)
-                    .then(res => {
-                        const response = res.data.response;
-                        detailedVenues[i] = {...detailedVenues[i], ...response.venue};
-
-                    })
-                    .catch(error => {
-                        // this.setState({venues: detailedVenues});
-                    })
-                    .finally(() => {
-                        this.setState({venues: detailedVenues});
-                    });
-            }
-        }
     };
     setVenueInfo = (index) => {
         let venueString = 'Venue ' + index;
@@ -164,7 +141,7 @@ class App extends React.Component {
 
             }
         }
-        if (this.state.chosenVenue != chosenVenue)
+        if (this.state.chosenVenue !== chosenVenue)
             this.setState({chosenVenue});
     };
     getFavourableVenue = () => {

@@ -47,13 +47,6 @@ export const MainDiv = styled.div`
     
 `;
 
-const setChosenVenueClass = (isChosen) => {
-    if (isChosen) {
-        return ".chosen"
-    }
-    return "";
-};
-
 function VotingTableRow(props) {
     return (
         <DataContext.Consumer>
@@ -65,7 +58,7 @@ function VotingTableRow(props) {
                     </ParticipantsDiv>
                     {[0, 1, 2].map(i => <RestaurantDiv
                         onClick={(event) => value.setVenueChoiceForParticipant(props.index, i)}
-                        highlighted={i == value.getVenueChoiceForParticipant(props.index)}/>)}
+                        highlighted={i === value.getVenueChoiceForParticipant(props.index)}/>)}
                 </MainDiv>
             }
         </DataContext.Consumer>

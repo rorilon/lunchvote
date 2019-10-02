@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import {DataContext} from "../context/data";
+import {getVenuesByGeocode} from "../data/foursquare"
 
 export const Button = styled.button`
     width: 130px;
@@ -49,28 +49,12 @@ class Search extends React.Component {
         };
     }
 
-    handleClick = (setVenues) => {
+    handleClick = async (setVenues) => {
         const geocode = this.state.geocode;
-        const qs = `
-?client_id=3DPN2ENQ0OTEPWMLBM3EFWSIWDPHPIWFPDDR0MV4QEKMDNPP
-&client_secret=CZAA1JCYSWHINAKXX45FOGA4U5PNENPRNIHJY14ULBSQEYX0
-&query=lunch
-&locale=en
-&near=${geocode}
-&v=20190724
-
-&limit=3`;
-        axios.get(`https://api.foursquare.com/v2/venues/search` + qs)
-            .then(res => {
-                const response = res.data;
-                const venuesData = response.response.venues;
-                setVenues(venuesData);
-            })
-            .catch(error => {
-                // handle error
-                setVenues([]);
-            })
+        const venues = await getVenuesByGeocode(geocode);
+        setVenues(venues);
     };
+
     updateInputValue = (event) => {
         this.setState({
             geocode: event.target.value
